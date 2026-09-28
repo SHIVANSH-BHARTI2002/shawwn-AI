@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PageContext Settings</title>
+  <link rel="stylesheet" href="options.css" />
+</head>
+<body>
+  <main class="wrap">
+    <header class="head">
+      <span class="brand-mark">P</span>
+      <h1>PageContext Settings</h1>
+    </header>
+
+    <section class="card">
+      <h2>Extraction Settings</h2>
+
+      <label class="check"><input type="checkbox" id="removeNavigation" /> Remove navigation</label>
+      <label class="check"><input type="checkbox" id="removeAdvertisements" /> Remove advertisements</label>
+      <label class="check"><input type="checkbox" id="removeFooter" /> Remove footer</label>
+      <label class="check"><input type="checkbox" id="removeSidebars" /> Remove sidebars</label>
+      <label class="check"><input type="checkbox" id="includeLinks" /> Include links</label>
+      <label class="check"><input type="checkbox" id="includeImages" /> Include images</label>
+      <label class="check"><input type="checkbox" id="includeMetadata" /> Include metadata</label>
+    </section>
+
+    <section class="card">
+      <h2>Output</h2>
+
+      <div class="field">
+        <label for="defaultFormat">Default output</label>
+        <select id="defaultFormat">
+          <option value="markdown">Markdown</option>
+          <option value="text">Plain Text</option>
+          <option value="json">JSON</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="maxContentLength">Maximum content size (characters)</label>
+        <input type="number" id="maxContentLength" min="1000" step="1000" />
+      </div>
+
+      <div class="field">
+        <label for="waitForPageMs">Wait for page (ms, 0–1000)</label>
+        <input type="number" id="waitForPageMs" min="0" max="1000" step="100" />
+      </div>
+    </section>
+
+    <div class="actions">
+      <button id="save" class="primary-btn">Save Settings</button>
+      <button id="reset" class="secondary-btn">Reset to Defaults</button>
+      <span id="status" class="status" role="status" aria-live="polite"></span>
+    </div>
+  </main>
+
+  <script type="module" src="options.js"></script>
+</body>
+</html>

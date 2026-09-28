@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PageContext</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="brand">
+      <span class="brand-mark">P</span>
+      <h1>PageContext</h1>
+    </div>
+    <button id="open-options" class="icon-btn" title="Settings" aria-label="Settings">⚙</button>
+  </header>
+
+  <main class="content">
+    <section class="page-info">
+      <p class="label">Current Page</p>
+      <p id="page-title" class="page-title">Loading…</p>
+      <p id="page-domain" class="page-domain"></p>
+    </section>
+
+    <button id="extract-btn" class="primary-btn">Extract Page</button>
+
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+
+    <hr class="divider" />
+
+    <section id="results" class="results" hidden>
+      <div class="stats">
+        <span id="word-count">0 words</span>
+        <span class="dot">•</span>
+        <span id="char-count">0 characters</span>
+      </div>
+
+      <div class="format-row">
+        <label for="format-select">Format:</label>
+        <select id="format-select">
+          <option value="markdown">Markdown</option>
+          <option value="text">Plain Text</option>
+          <option value="json">JSON</option>
+        </select>
+      </div>
+
+      <textarea id="output" class="output" readonly spellcheck="false" aria-label="Extracted content"></textarea>
+
+      <div class="actions">
+        <button id="copy-btn" class="secondary-btn">Copy</button>
+        <button id="download-btn" class="secondary-btn">Download</button>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "name": "page-context",
+  "version": "1.0.0",
+  "description": "PageContext - Extract clean webpage content for AI agents and RAG systems.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build.js",
+    "build:watch": "node scripts/build.js --watch",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [
+    "chrome-extension",
+    "manifest-v3",
+    "content-extraction",
+    "markdown",
+    "rag",
+    "llm"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.23.0",
+    "jsdom": "^24.1.0",
+    "vitest": "^2.0.0"
+  }
+}
