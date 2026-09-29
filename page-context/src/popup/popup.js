@@ -14,6 +14,7 @@ const el = {
   title: document.getElementById('page-title'),
   domain: document.getElementById('page-domain'),
   extractBtn: document.getElementById('extract-btn'),
+  shawwnBtn: document.getElementById('shawwn-btn'),
   status: document.getElementById('status'),
   results: document.getElementById('results'),
   wordCount: document.getElementById('word-count'),
@@ -41,6 +42,7 @@ async function init() {
   await restoreLastExtraction();
 
   el.extractBtn.addEventListener('click', onExtract);
+  el.shawwnBtn.addEventListener('click', openShawwn);
   el.format.addEventListener('change', onFormatChange);
   el.copyBtn.addEventListener('click', onCopy);
   el.downloadBtn.addEventListener('click', onDownload);
@@ -133,6 +135,23 @@ function sendToWorker(message) {
       resolve(response);
     });
   });
+}
+
+/**
+ * Open the shawwn chat page in a compact popup window.
+ * The active page's tab id and url are passed along so the chat operates on the
+ * original page rather than its own window.
+ */
+async function openShawwn() {
+  const tab = await getActiveTab();
+  const params = new URLSearchParams();
+  if (tab) {
+    if (tab.id != null) params.set('tabId', String(tab.id));
+    if (tab.url) params.set('url', tab.url);
+    if (tab.title) params.set('title', tab.title);
+  }
+  const url = chrome.runtime.getURL(`src/chat/chat.html?${params.toString()}`);
+  chrome.windows.create({ url, type: 'popup', width: 420, height: 640 });
 }
 
 /** Render the current result into the UI at the selected format. */

@@ -12,9 +12,7 @@ import { dirname, resolve } from 'node:path';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, '..');
 
-const options = {
-  entryPoints: [resolve(root, 'src/content/content.js')],
-  outfile: resolve(root, 'src/content/content.bundle.js'),
+const common = {
   bundle: true,
   format: 'iife',
   target: ['chrome110'],
@@ -23,13 +21,31 @@ const options = {
   logLevel: 'info'
 };
 
+const entries = [
+  {
+    entryPoints: [resolve(root, 'src/content/content.js')],
+    outfile: resolve(root, 'src/content/content.bundle.js'),
+    ...common
+  },
+  {
+    // The shawwn floating widget, injected on all pages.
+    entryPoints: [resolve(root, 'src/widget/widget.js')],
+    outfile: resolve(root, 'src/widget/widget.bundle.js'),
+    ...common
+  }
+];
+
 const watch = process.argv.includes('--watch');
 
 if (watch) {
-  const ctx = await context(options);
-  await ctx.watch();
-  console.log('[build] watching src/content and src/lib for changes...');
+  for (const opts of entries) {
+    const ctx = await context(opts);
+    await ctx.watch();
+  }
+  console.log('[build] watching src/content, src/widget and src/lib for changes...');
 } else {
-  await build(options);
-  console.log('[build] wrote src/content/content.bundle.js');
+  for (const opts of entries) {
+    await build(opts);
+    console.log(`[build] wrote ${opts.outfile.replace(root + '/', '')}`);
+  }
 }

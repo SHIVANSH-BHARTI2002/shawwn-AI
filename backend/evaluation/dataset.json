@@ -1,0 +1,86 @@
+{
+  "document": {
+    "page": {
+      "title": "Laptop",
+      "url": "https://example.com/laptop",
+      "domain": "example.com",
+      "language": "en",
+      "description": "A test laptop specification page",
+      "canonicalUrl": "https://example.com/laptop"
+    },
+    "content": {
+      "markdown": "# Laptop\n\n## Processor\n\nIntel Core Ultra 7 155H\n\n## RAM\n\n16GB DDR5\n\n## Storage\n\n1TB SSD\n\n## Battery\n\n70Wh\n\n## Comparison\n\n| Model | RAM | Storage | Price |\n| --- | --- | --- | --- |\n| Model A | 8GB | 512GB | 50000 |\n| Model B | 16GB | 1TB | 70000 |\n",
+      "text": "Laptop Processor Intel Core Ultra 7 155H RAM 16GB DDR5 Storage 1TB SSD Battery 70Wh",
+      "wordCount": 40,
+      "characterCount": 84
+    },
+    "structure": {
+      "headings": [
+        { "level": 1, "text": "Laptop" },
+        { "level": 2, "text": "Processor" },
+        { "level": 2, "text": "RAM" },
+        { "level": 2, "text": "Storage" },
+        { "level": 2, "text": "Battery" }
+      ],
+      "paragraphs": [],
+      "lists": [],
+      "tables": [
+        {
+          "headers": ["Model", "RAM", "Storage", "Price"],
+          "rows": [
+            ["Model A", "8GB", "512GB", "50000"],
+            ["Model B", "16GB", "1TB", "70000"]
+          ],
+          "markdown": ""
+        }
+      ],
+      "links": [],
+      "images": []
+    },
+    "metadata": { "extractedAt": "2026-01-01T00:00:00Z" }
+  },
+  "questions": [
+    {
+      "question": "What processor does the laptop use?",
+      "expected_answer_contains": "Intel Core Ultra 7 155H",
+      "expected_source": "Processor",
+      "expect_answer": true
+    },
+    {
+      "question": "How much RAM does it have?",
+      "expected_answer_contains": "16GB",
+      "expected_source": "RAM",
+      "expect_answer": true
+    },
+    {
+      "question": "What storage capacity is available?",
+      "expected_answer_contains": "1TB",
+      "expected_source": "Storage",
+      "expect_answer": true
+    },
+    {
+      "question": "What is the battery capacity?",
+      "expected_answer_contains": "70Wh",
+      "expected_source": "Battery",
+      "expect_answer": true
+    },
+    {
+      "question": "Which model has 16GB RAM?",
+      "expected_answer_contains": "Model B",
+      "expected_source": "Comparison",
+      "expect_answer": true
+    },
+    {
+      "question": "What GPU does it have?",
+      "expected_answer_contains": "couldn't find",
+      "expected_source": null,
+      "expect_answer": false
+    },
+    {
+      "question": "Does it support wireless charging?",
+      "expected_answer_contains": "couldn't find",
+      "expected_source": null,
+      "expect_answer": false
+    }
+  ]
+}

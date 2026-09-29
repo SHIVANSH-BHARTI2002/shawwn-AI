@@ -1,0 +1,72 @@
+# shawwn development stack.
+#
+# `docker compose up` brings up the backend plus its dependencies. The backend
+# runs in light mode by default (deterministic, no model downloads) so the stack
+# is usable immediately. To enable full mode (BGE-M3 + BGE reranker + OpenAI):
+#   1. Uncomment the ML install lines in backend/Dockerfile and rebuild.
+#   2. Set SHAWWN_LIGHT_MODE=false and OPENAI_API_KEY in the environment.
+
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      APP_ENV: development
+      SHAWWN_LIGHT_MODE: "true"
+      QDRANT_URL: http://qdrant:6333
+      QDRANT_COLLECTION: shawwn_chunks
+      POSTGRES_URL: postgresql+asyncpg://shawwn:shawwn@postgres:5432/shawwn
+      REDIS_URL: redis://redis:6379
+      CORS_ORIGINS: "http://localhost:8000,chrome-extension://*"
+      LLM_PROVIDER: gemini
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      GEMINI_MODEL: gemini-flash-lite-latest
+      LLM_TEMPERATURE: "0.4"
+      # OPENAI_API_KEY: ""
+      # OPENAI_MODEL: gpt-4o-mini
+    depends_on:
+      qdrant:
+        condition: service_started
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    restart: unless-stopped
+
+  qdrant:
+    image: qdrant/qdrant:v1.12.1
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: shawwn
+      POSTGRES_PASSWORD: shawwn
+      POSTGRES_DB: shawwn
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U shawwn"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+volumes:
+  qdrant_data:
+  postgres_data:

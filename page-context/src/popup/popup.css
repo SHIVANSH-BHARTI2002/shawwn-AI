@@ -1,14 +1,15 @@
 :root {
-  --indigo: #4f46e5;
-  --indigo-dark: #4338ca;
-  --indigo-light: #eef2ff;
-  --text: #1f2937;
-  --text-muted: #6b7280;
-  --border: #e5e7eb;
-  --bg: #ffffff;
-  --bg-soft: #f9fafb;
-  --success: #059669;
-  --error: #dc2626;
+  /* shawwn logo palette: sage green / deep green / cream / pink accent */
+  --indigo: #4a9478;
+  --indigo-dark: #2f6b54;
+  --indigo-light: #e6f0ea;
+  --text: #1e1e1e;
+  --text-muted: #6b7f74;
+  --border: #dfe7e0;
+  --bg: #fdfcf7;
+  --bg-soft: #f4f1e8;
+  --success: #2f6b54;
+  --error: #a3403f;
   --radius: 8px;
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --mono: "SF Mono", "Cascadia Code", Consolas, "Liberation Mono", monospace;
@@ -58,6 +59,13 @@ body {
   color: #fff;
   font-weight: 700;
   font-size: 14px;
+}
+
+.brand-logo {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: block;
 }
 
 .header h1 {
@@ -120,6 +128,11 @@ body {
 }
 .primary-btn:hover { background: var(--indigo-dark); }
 .primary-btn:disabled { opacity: 0.6; cursor: default; }
+
+.secondary-btn.full {
+  width: 100%;
+  margin-top: 8px;
+}
 
 .status {
   min-height: 18px;

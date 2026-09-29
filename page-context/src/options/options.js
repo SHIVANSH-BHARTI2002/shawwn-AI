@@ -3,7 +3,12 @@
  * Keeps storage interaction isolated from extraction logic.
  */
 
-import { DEFAULT_SETTINGS, STORAGE_KEYS, MAX_CONTENT_LENGTH } from '../utils/constants.js';
+import {
+  DEFAULT_SETTINGS,
+  STORAGE_KEYS,
+  MAX_CONTENT_LENGTH,
+  DEFAULT_SHAWWN_SETTINGS
+} from '../utils/constants.js';
 
 const CHECKBOXES = [
   'removeNavigation',
@@ -21,7 +26,8 @@ init();
 
 async function init() {
   const settings = await loadSettings();
-  applyToForm(settings);
+  const shawwn = await loadShawwn();
+  applyToForm(settings, shawwn);
 
   document.getElementById('save').addEventListener('click', onSave);
   document.getElementById('reset').addEventListener('click', onReset);
@@ -35,7 +41,15 @@ function loadSettings() {
   });
 }
 
-function applyToForm(settings) {
+function loadShawwn() {
+  return new Promise((resolve) => {
+    chrome.storage.local.get(STORAGE_KEYS.SHAWWN_SETTINGS, (data) => {
+      resolve({ ...DEFAULT_SHAWWN_SETTINGS, ...(data[STORAGE_KEYS.SHAWWN_SETTINGS] || {}) });
+    });
+  });
+}
+
+function applyToForm(settings, shawwn = DEFAULT_SHAWWN_SETTINGS) {
   for (const key of CHECKBOXES) {
     const box = document.getElementById(key);
     if (box) box.checked = Boolean(settings[key]);
@@ -43,6 +57,8 @@ function applyToForm(settings) {
   document.getElementById('defaultFormat').value = settings.defaultFormat;
   document.getElementById('maxContentLength').value = settings.maxContentLength;
   document.getElementById('waitForPageMs').value = settings.waitForPageMs;
+  document.getElementById('backendUrl').value = shawwn.backendUrl || '';
+  document.getElementById('apiToken').value = shawwn.apiToken || '';
 }
 
 function readForm() {
@@ -63,20 +79,40 @@ function readForm() {
   return settings;
 }
 
+function readShawwn() {
+  const backendUrl =
+    document.getElementById('backendUrl').value.trim() || DEFAULT_SHAWWN_SETTINGS.backendUrl;
+  const apiToken = document.getElementById('apiToken').value.trim();
+  return { backendUrl, apiToken };
+}
+
 async function onSave() {
   const settings = readForm();
+  const shawwn = readShawwn();
   await new Promise((resolve) =>
-    chrome.storage.local.set({ [STORAGE_KEYS.SETTINGS]: settings }, resolve)
+    chrome.storage.local.set(
+      {
+        [STORAGE_KEYS.SETTINGS]: settings,
+        [STORAGE_KEYS.SHAWWN_SETTINGS]: shawwn
+      },
+      resolve
+    )
   );
-  applyToForm(settings); // reflect any clamped values
+  applyToForm(settings, shawwn); // reflect any clamped values
   showStatus('✓ Settings saved');
 }
 
 async function onReset() {
   await new Promise((resolve) =>
-    chrome.storage.local.set({ [STORAGE_KEYS.SETTINGS]: { ...DEFAULT_SETTINGS } }, resolve)
+    chrome.storage.local.set(
+      {
+        [STORAGE_KEYS.SETTINGS]: { ...DEFAULT_SETTINGS },
+        [STORAGE_KEYS.SHAWWN_SETTINGS]: { ...DEFAULT_SHAWWN_SETTINGS }
+      },
+      resolve
+    )
   );
-  applyToForm(DEFAULT_SETTINGS);
+  applyToForm(DEFAULT_SETTINGS, DEFAULT_SHAWWN_SETTINGS);
   showStatus('✓ Reset to defaults');
 }
 

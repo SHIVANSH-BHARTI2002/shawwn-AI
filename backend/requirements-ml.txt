@@ -1,0 +1,6 @@
+# Heavy ML dependencies that enable "full" mode (real BGE-M3 embeddings and
+# BGE reranker). These download large models on first use. They are optional:
+# the backend runs in deterministic "light" mode when they are absent.
+sentence-transformers==3.3.1
+FlagEmbedding==1.3.3
+torch>=2.2.0

@@ -1,12 +1,17 @@
 {
   "manifest_version": 3,
-  "name": "PageContext",
-  "version": "1.0.0",
-  "description": "Extract clean webpage content for AI agents and RAG systems.",
+  "name": "shawwn",
+  "version": "1.2.0",
+  "description": "shawwn reads the current webpage and answers questions about it, with a floating chat and page extraction.",
   "permissions": [
     "activeTab",
     "scripting",
-    "storage"
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "http://localhost/*",
+    "http://127.0.0.1/*"
   ],
   "action": {
     "default_popup": "src/popup/popup.html",
@@ -17,6 +22,19 @@
     "type": "module"
   },
   "options_page": "src/options/options.html",
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["src/widget/widget.bundle.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/icons/shawwn_logo.png"],
+      "matches": ["http://*/*", "https://*/*"]
+    }
+  ],
   "icons": {
     "16": "assets/icons/icon-16.png",
     "48": "assets/icons/icon-48.png",

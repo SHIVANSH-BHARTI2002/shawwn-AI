@@ -16,7 +16,17 @@ export const MAX_CONTENT_LENGTH = 100000;
 /** chrome.storage.local keys. */
 export const STORAGE_KEYS = Object.freeze({
   SETTINGS: 'pagecontext.settings',
-  LAST_EXTRACTION: 'pagecontext.lastExtraction'
+  LAST_EXTRACTION: 'pagecontext.lastExtraction',
+  SHAWWN_SETTINGS: 'shawwn.settings'
+});
+
+/** Default backend URL for the shawwn RAG API. Overridable in options. */
+export const DEFAULT_BACKEND_URL = 'http://localhost:8000';
+
+/** Default settings for the shawwn chat integration. */
+export const DEFAULT_SHAWWN_SETTINGS = Object.freeze({
+  backendUrl: DEFAULT_BACKEND_URL,
+  apiToken: ''
 });
 
 /**

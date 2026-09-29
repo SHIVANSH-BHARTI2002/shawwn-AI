@@ -1,0 +1,27 @@
+# --- Core API (required, lightweight) ---
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+pydantic==2.10.4
+pydantic-settings==2.7.1
+python-dotenv==1.0.1
+httpx==0.28.1
+
+# --- Database ---
+sqlalchemy==2.0.36
+aiosqlite==0.20.0
+# For PostgreSQL in production (docker-compose):
+asyncpg==0.30.0
+
+# --- Vector DB client ---
+qdrant-client==1.12.1
+
+# --- LLM ---
+openai==1.59.6
+
+# --- Testing ---
+pytest==8.3.4
+pytest-asyncio==0.25.0
+
+# --- Heavy ML stack (optional; enables "full" mode) ---
+# Install separately with:  pip install -r requirements-ml.txt
+# The backend runs in deterministic "light" mode without these.

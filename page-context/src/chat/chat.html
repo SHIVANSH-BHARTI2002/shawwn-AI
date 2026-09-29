@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>shawwn</title>
+  <link rel="stylesheet" href="chat.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="brand">
+      <img class="brand-logo" src="../../assets/icons/shawwn_logo.png" alt="shawwn" />
+      <h1>shawwn</h1>
+    </div>
+    <button id="open-options" class="icon-btn" title="Settings" aria-label="Settings">⚙</button>
+  </header>
+
+  <section class="page-bar">
+    <div class="page-meta">
+      <p class="label">Current page</p>
+      <p id="page-title" class="page-title">Loading…</p>
+    </div>
+    <div class="status-pill" id="status-pill">
+      <span class="dot" id="status-dot"></span>
+      <span id="status-text">Checking…</span>
+    </div>
+  </section>
+
+  <div id="analyze-row" class="analyze-row">
+    <button id="analyze-btn" class="primary-btn">Analyze Page</button>
+  </div>
+
+  <main id="messages" class="messages" aria-live="polite"></main>
+
+  <section id="suggestions" class="suggestions" hidden></section>
+
+  <form id="composer" class="composer" hidden>
+    <textarea
+      id="input"
+      class="input"
+      rows="1"
+      placeholder="Ask about this page…"
+      aria-label="Ask about this page"
+    ></textarea>
+    <button id="send-btn" class="send-btn" type="submit" title="Send" aria-label="Send">➤</button>
+  </form>
+
+  <script type="module" src="chat.js"></script>
+</body>
+</html>
